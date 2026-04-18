@@ -1,0 +1,13 @@
+name = "golden-focus-get"
+main = "worker.js"
+compatibility_date = "2026-04-01"
+
+# Bind the Worker to get.goldenfocus.io.
+# The zone (goldenfocus.io) must already be on the Cloudflare account you
+# authenticate with. `wrangler deploy` will create/update a route for this.
+routes = [
+  { pattern = "get.goldenfocus.io/*", zone_name = "goldenfocus.io" }
+]
+
+[observability]
+enabled = true
