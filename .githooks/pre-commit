@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# Golden Cloud pre-commit — blocks plaintext secrets from landing in git.
+set -euo pipefail
+
+if ! command -v gitleaks >/dev/null 2>&1; then
+  echo "⚠️  gitleaks not installed. install: brew install gitleaks"
+  echo "   skipping secret scan — you are on your honor."
+  exit 0
+fi
+
+echo "🔍 gitleaks: scanning staged changes..."
+if ! gitleaks protect --staged --redact --verbose --config .gitleaks.toml; then
+  echo ""
+  echo "❌ gitleaks found something that looks like a secret in your staged changes."
+  echo "   if it's a real secret: encrypt it with sops into secrets/ instead."
+  echo "   if it's a false positive: add a path to .gitleaks.toml allowlists."
+  exit 1
+fi
+echo "✅ gitleaks: clean."

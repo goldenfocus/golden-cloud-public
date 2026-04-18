@@ -1,0 +1,6 @@
+[extend]
+useDefault = true
+
+# PUBLIC REPO: no allowlists. Any secret-shaped content is treated as a leak.
+# If you need to store secrets, they belong in the private repo (golden-cloud)
+# under secrets/, encrypted with SOPS.
